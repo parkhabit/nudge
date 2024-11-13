@@ -5,21 +5,22 @@ export default function TabLayout() {
   return (
     <Tabs screenOptions={{ tabBarActiveTintColor: "black" }}>
       <Tabs.Screen
-        name="index"
+        name="insights"
         options={{
-          headerShown: false,
-          title: "Today",
+          title: "Insights",
           tabBarIcon: ({ color }) => (
-            <FeatherIcon size={28} name="home" color={color} />
+            <FeatherIcon size={28} name="grid" color={color} />
           ),
         }}
       />
+
       <Tabs.Screen
-        name="data"
+        name="index"
         options={{
-          title: "Data",
+          headerShown: false,
+          title: "Habits",
           tabBarIcon: ({ color }) => (
-            <FeatherIcon size={28} name="grid" color={color} />
+            <FeatherIcon size={28} name="home" color={color} />
           ),
         }}
       />
