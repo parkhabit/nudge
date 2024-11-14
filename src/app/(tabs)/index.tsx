@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { FlatList, SafeAreaView } from "react-native";
+import { FlatList, SafeAreaView, Text } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Greeting from "../../components/Greeting";
 import HabitCard from "../../components/HabitCard";
 import { dataTracking, dataHabits } from "../../data";
-import { Habit, TrackedDay, TrackedHabit } from "../../types";
+import { Habit, TrackedDay } from "../../types";
 import DatePicker from "../../components/DatePicker";
 
 const Home = () => {
@@ -29,7 +29,7 @@ const Home = () => {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <SafeAreaView>
+      <SafeAreaView className="flex-1">
         <Greeting name={user.name} />
         <DatePicker currentDate={date} onDateChange={setDate} />
         <FlatList

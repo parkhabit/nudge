@@ -1,18 +1,21 @@
+import { ReactNode } from "react";
 import { View, Text, Pressable } from "react-native";
 
-const DateButton = ({
-  date,
-  active,
-  onDateChange,
-}: {
+interface DateButtonProps {
   date: Date;
   active: boolean;
   onDateChange: React.Dispatch<React.SetStateAction<Date>>;
-}) => {
+  key: string;
+}
+const DateButton = ({ date, active, onDateChange }: DateButtonProps) => {
   const day = date.toLocaleString("en-us", { weekday: "short" });
 
   return (
-    <Pressable className="items-center" onPress={() => onDateChange(date)}>
+    <Pressable
+      className="items-center"
+      onPress={() => onDateChange(date)}
+      key={date.toISOString()}
+    >
       <Text className={`pb-2 ${active && "font-bold"}`}>{day}</Text>
       <View
         className={`rounded-full bg-gray-300 h-11 w-11 items-center justify-center p-3 ${
@@ -46,11 +49,16 @@ const DatePicker = ({
 
   const startingDate = subtractDays(currentDate, 3);
 
-  let dateButtonList = [];
+  let dateButtonList: React.ReactElement<DateButtonProps>[] = [];
   for (let i = 0; i < 7; i++) {
     const newDate = addDays(startingDate, i);
     dateButtonList.push(
-      <DateButton date={newDate} active={i === 3} onDateChange={onDateChange} />
+      <DateButton
+        key={newDate.toISOString()}
+        date={newDate}
+        active={i === 3}
+        onDateChange={onDateChange}
+      />
     );
   }
 

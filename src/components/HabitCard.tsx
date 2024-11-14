@@ -2,6 +2,7 @@ import { Text, View, TouchableOpacity, Animated } from "react-native";
 import { Habit, ValueType } from "../types";
 import FeatherIcon from "@expo/vector-icons/Feather";
 import Swipeable from "react-native-gesture-handler/Swipeable";
+import { router } from "expo-router";
 
 const HabitCard = ({
   habit: { id, name, description, icon, valueType, frequency, reminders },
@@ -15,7 +16,7 @@ const HabitCard = ({
 
   const onPressTracked = () => {
     if (valueType === ValueType.NUMBER) {
-      // show a modal to input the number or time
+      router.push(`/tracking/${id}`);
     } else {
       // update the tracking table, need trackingId habitId and set the habitValue and habitComplete to true
     }
@@ -61,25 +62,27 @@ const HabitCard = ({
   };
 
   return (
-    <Swipeable
-      overshootRight={true}
-      overshootLeft={true}
-      renderRightActions={(dragX) => renderRightActions(dragX, onPressSkip)}
-      renderLeftActions={(dragX) => renderLeftActions(dragX, onPressTracked)}
-    >
-      <View
-        key={id}
-        className="bg-gray-200 rounded-lg p-3 flex flex-row items-center gap-2"
+    <>
+      <Swipeable
+        overshootRight={true}
+        overshootLeft={true}
+        renderRightActions={(dragX) => renderRightActions(dragX, onPressSkip)}
+        renderLeftActions={(dragX) => renderLeftActions(dragX, onPressTracked)}
       >
-        <View className="rounded-full bg-black p-2">
-          <FeatherIcon size={28} name={icon} color={"white"} />
+        <View
+          key={id}
+          className="bg-gray-200 rounded-lg p-3 flex flex-row items-center gap-2"
+        >
+          <View className="rounded-full bg-black p-2">
+            <FeatherIcon size={28} name={icon} color={"white"} />
+          </View>
+          <View>
+            <Text className="font-semibold">{name}</Text>
+            <Text>{description}</Text>
+          </View>
         </View>
-        <View>
-          <Text className="font-semibold">{name}</Text>
-          <Text>{description}</Text>
-        </View>
-      </View>
-    </Swipeable>
+      </Swipeable>
+    </>
   );
 };
 
