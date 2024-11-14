@@ -51,7 +51,7 @@ export const dataHabits: Habit[] = [
 export const dataTracking: TrackedDay[] = [
     {
         id: 1,
-        date: '2024-11-13',
+        date: new Date('2024-11-14'),
         habits : [
             {
             habitId: 1,

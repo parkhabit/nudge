@@ -29,6 +29,6 @@ export type TrackedHabit = {
 
 export type TrackedDay = {
     id: number;
-    date: string;
+    date: Date;
     habits: TrackedHabit[]
 }
