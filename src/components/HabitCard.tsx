@@ -31,6 +31,7 @@ const HabitCard = ({
       outputRange: [2, 1, 0],
       extrapolate: "clamp",
     });
+
     return (
       <TouchableOpacity
         activeOpacity={0.8}
@@ -50,6 +51,7 @@ const HabitCard = ({
       inputRange: [0, 50, 100, 101],
       outputRange: [-20, 0, 0, 1],
     });
+
     return (
       <TouchableOpacity
         activeOpacity={0.8}
