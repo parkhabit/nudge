@@ -1,7 +1,21 @@
-import { Controller } from "react-hook-form";
+import { Control, Controller, FieldErrors } from "react-hook-form";
 import { View, Text, TextInput } from "react-native";
 
-const StyledTextInput = ({ label, name, control, errors, placeholder }) => {
+interface StyledTextInputProps {
+  label: string;
+  name: string;
+  control: Control<any>;
+  errors: any;
+  placeholder?: string;
+}
+
+const StyledTextInput = ({
+  label,
+  name,
+  control,
+  errors,
+  placeholder,
+}: StyledTextInputProps) => {
   return (
     <View>
       <Text className="text-semibold text-lg">{label}</Text>
@@ -20,9 +34,7 @@ const StyledTextInput = ({ label, name, control, errors, placeholder }) => {
         )}
         name={name}
       />
-      {errors?.[name] && (
-        <Text className="pt-2 color-red-600">{errors?.[name]?.message}</Text>
-      )}
+      {errors && <Text className="pt-2 color-red-600">{errors.message}</Text>}
     </View>
   );
 };

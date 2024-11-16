@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { View, Pressable, Text } from "react-native";
-import StyledTextInput from "../../components/ui/TextInput";
+import StyledTextInput from "../../components/ui/StyledTextInput";
 import { SelectList } from "react-native-dropdown-select-list";
 import { useState } from "react";
 import { router } from "expo-router";
@@ -10,6 +10,7 @@ import { router } from "expo-router";
 const schema = yup.object({
   habitName: yup.string().required("Field required"),
   habitDescription: yup.string().required("Field required"),
+  habitValueDescription: yup.string().required("Field required"),
   habitIcon: yup.string(),
   valueType: yup.string() || yup.number(),
   frequency: yup.string(),
@@ -45,14 +46,14 @@ const Add = () => {
         label="Behaviour title"
         name={"habitName"}
         control={control}
-        errors={errors}
+        errors={errors.habitName}
       />
       <StyledTextInput
         placeholder="Keeping hydrated is important for my health"
         label="Behaviour description"
         name={"habitDescription"}
         control={control}
-        errors={errors}
+        errors={errors.habitDescription}
       />
       <View className="flex flex-row gap-3">
         <View className="flex-2">
@@ -78,7 +79,7 @@ const Add = () => {
               label="Value description"
               name={"habitValueDescription"}
               control={control}
-              errors={errors}
+              errors={errors.habitValueDescription}
             />
           </View>
         )}
