@@ -10,6 +10,7 @@ export default function RootLayout() {
         name="tracking"
         options={{ headerShown: false, animation: "slide_from_bottom" }}
       />
+      <Stack.Screen name="success" options={{ headerShown: false }} />
     </Stack>
   );
 }
