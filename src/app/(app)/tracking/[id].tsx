@@ -3,7 +3,7 @@ import { SafeAreaView } from "react-native";
 import { router, useLocalSearchParams } from "expo-router";
 import FeatherIcon from "@expo/vector-icons/Feather";
 import { useForm, Controller } from "react-hook-form";
-import { dataHabits } from "../../data";
+import { dataHabits } from "../../../data";
 
 const Tracking = () => {
   const { id } = useLocalSearchParams<{ id: string }>();

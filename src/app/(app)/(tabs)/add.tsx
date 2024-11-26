@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { View, Pressable, Text } from "react-native";
-import StyledTextInput from "../../components/ui/StyledTextInput";
+import StyledTextInput from "../../../components/ui/StyledTextInput";
 import { SelectList } from "react-native-dropdown-select-list";
 import { useState } from "react";
 import { router } from "expo-router";

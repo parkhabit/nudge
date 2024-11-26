@@ -14,6 +14,7 @@ export default function RootLayout() {
           options={{ headerShown: false, animation: "slide_from_bottom" }}
         />
         <Stack.Screen name="success" options={{ headerShown: false }} /> */}
+        <Stack.Screen name="(app)" options={{ headerShown: false }} />
       </Stack>
     </SessionProvider>
   );

@@ -3,10 +3,13 @@ import FeatherIcon from "@expo/vector-icons/Feather";
 
 export default function TabLayout() {
   return (
-    <Tabs screenOptions={{ tabBarActiveTintColor: "black" }}>
+    <Tabs
+      screenOptions={{ tabBarActiveTintColor: "black", headerShown: false }}
+    >
       <Tabs.Screen
         name="insights"
         options={{
+          headerShown: false,
           title: "Insights",
           tabBarIcon: ({ color }) => (
             <FeatherIcon size={28} name="grid" color={color} />
