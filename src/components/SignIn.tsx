@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import StyledTextInput from "./ui/StyledTextInput";
+import { router } from "expo-router";
 
 const signinSchema = yup.object({
   email: yup.string().required("Field required"),
@@ -27,11 +28,15 @@ const SignInForm = ({
   });
 
   const onSubmit = async (data) => {
-    onSignIn(data.email, data.password).catch((error) => {
-      console.log(error.message);
-      setError("root", { message: error.message });
-      setTimeout(() => clearErrors("root"), 8000);
-    });
+    onSignIn(data.email, data.password)
+      .then(() => {
+        router.navigate("/(tabs)/");
+      })
+      .catch((error) => {
+        console.log(error.message);
+        setError("root", { message: error.message });
+        setTimeout(() => clearErrors("root"), 8000);
+      });
   };
 
   return (

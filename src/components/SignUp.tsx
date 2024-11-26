@@ -27,7 +27,6 @@ const SignUpForm = ({
   const onSubmit = (data) => {
     onSignUp(data.email, data.password, data.firstName)
       .then(() => {
-        console.log("Signed up successfully");
         router.push("./success");
       })
       .catch((error) => {

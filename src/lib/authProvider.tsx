@@ -54,6 +54,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
           await account.create(ID.unique(), email, password, name);
         },
         signOut: () => {
+          account.deleteSession("current");
           setSession(null);
         },
         session,
