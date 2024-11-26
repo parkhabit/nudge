@@ -3,32 +3,35 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import StyledTextInput from "./ui/StyledTextInput";
-import { Link, router } from "expo-router";
 
 const signinSchema = yup.object({
   email: yup.string().required("Field required"),
   password: yup.string().required("Field required"),
 });
 
-const signupSchema = yup.object({
-  email: yup.string().required("Field required"),
-  password: yup.string().required("Field required"),
-});
-
-const AuthForm = ({ type }: { type: string }) => {
+const SignInForm = ({
+  onSignIn,
+}: {
+  onSignIn: (email: string, password: string) => Promise<void>;
+}) => {
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    setError,
+    clearErrors,
+    formState: { errors, isValid, isDirty },
   } = useForm({
-    resolver: yupResolver(type === "signin" ? signinSchema : signupSchema),
+    mode: "onTouched",
+    reValidateMode: "onChange",
+    resolver: yupResolver(signinSchema),
   });
 
-  handleSubmit((data) => console.log(data));
-
-  const onSubmit = (data) => {
-    console.log(data);
-    router.push("/");
+  const onSubmit = async (data) => {
+    onSignIn(data.email, data.password).catch((error) => {
+      console.log(error.message);
+      setError("root", { message: error.message });
+      setTimeout(() => clearErrors("root"), 8000);
+    });
   };
 
   return (
@@ -46,18 +49,18 @@ const AuthForm = ({ type }: { type: string }) => {
         errors={errors.password}
       />
 
-      {type === "signin" && (
+      {/* {type === "signin" && (
+        // TODO: add functionality for forgot password
         <Link href="/forgot-password">
           <Text>Forgot password?</Text>
         </Link>
+      )} */}
+      {errors.root && (
+        <Text className="color-red-500">{errors.root.message}</Text>
       )}
-
-      <Button
-        title={type === "signin" ? "Sign in" : "Sign up"}
-        onPress={onSubmit}
-      />
+      <Button title={"Sign in"} onPress={handleSubmit(onSubmit)} />
     </>
   );
 };
 
-export default AuthForm;
+export default SignInForm;

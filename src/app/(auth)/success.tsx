@@ -8,14 +8,14 @@ const success = () => {
     <View className="flex items-center justify-center flex-1">
       <LottieView
         style={{ height: 260, width: 260 }}
-        source={require("../../assets/success.json")}
+        source={require("../../../assets/success.json")}
         autoPlay={true}
         loop={false}
         speed={0.5}
-        onAnimationFinish={() => router.navigate("/")}
+        onAnimationFinish={() => router.navigate("/(tabs)/")}
       />
 
-      <Text className="font-semibold text-lg">New behaviour added</Text>
+      <Text className="font-semibold text-lg">Welcome to Nudge</Text>
     </View>
   );
 };

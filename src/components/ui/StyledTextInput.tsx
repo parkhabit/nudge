@@ -19,22 +19,26 @@ const StyledTextInput = ({
   return (
     <View>
       <Text className="text-semibold text-lg">{label}</Text>
+      {errors && <Text className="color-red-600">{errors.message}</Text>}
       <Controller
         control={control}
         rules={{
           required: true,
         }}
-        render={({ field: { onChange, value } }) => (
-          <TextInput
-            className="border border-gray-500 rounded-lg py-4 px-5"
-            value={value}
-            onChangeText={onChange}
-            placeholder={placeholder}
-          />
-        )}
+        render={({ field: { onChange, value, onBlur } }) => {
+          return (
+            <TextInput
+              className="border border-gray-500 rounded-lg py-4 px-5"
+              value={value}
+              onChangeText={onChange}
+              placeholder={placeholder}
+              onBlur={onBlur}
+              secureTextEntry={name === "password"}
+            />
+          );
+        }}
         name={name}
       />
-      {errors && <Text className="pt-2 color-red-600">{errors.message}</Text>}
     </View>
   );
 };
