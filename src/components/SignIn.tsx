@@ -27,7 +27,7 @@ const SignInForm = ({
     resolver: yupResolver(signinSchema),
   });
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: any) => {
     onSignIn(data.email, data.password)
       .then(() => {
         router.navigate("/(tabs)/");

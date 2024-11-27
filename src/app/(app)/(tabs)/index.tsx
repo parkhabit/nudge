@@ -6,10 +6,20 @@ import HabitCard from "../../../components/HabitCard";
 import { dataTracking, dataHabits } from "../../../data";
 import { Habit, TrackedDay } from "../../../types";
 import DatePicker from "../../../components/DatePicker";
+import { getUserInfo } from "../../../lib/actions/userActions";
+import { useSession } from "../../../lib/authProvider";
 
 const Home = () => {
   const [date, setDate] = useState(new Date());
-  const user = { name: "Kitty" };
+  const [name, setName] = useState("");
+
+  const { session } = useSession();
+
+  if (session) {
+    getUserInfo(session).then((user) => {
+      setName(user?.firstName);
+    });
+  }
 
   const currentDateHabitIds = dataTracking.filter((tracking: TrackedDay) => {
     return (
@@ -30,7 +40,7 @@ const Home = () => {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaView className="flex-1">
-        <Greeting name={user.name} />
+        <Greeting name={name} />
 
         <DatePicker currentDate={date} onDateChange={setDate} />
         <FlatList

@@ -5,8 +5,13 @@ import { useSession } from "../../lib/authProvider";
 const SignUp = () => {
   const { signIn, signUp } = useSession();
 
-  async function register(email: string, password: string, name: string) {
-    await signUp(name, email, password);
+  async function register(
+    email: string,
+    password: string,
+    firstName: string,
+    lastName: string
+  ) {
+    await signUp(firstName, lastName, email, password);
     await signIn(email, password);
   }
   return (

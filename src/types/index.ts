@@ -15,8 +15,9 @@ export type Habit = {
     id: number;
     name: string;
     description: string;
-    icon: keyof typeof FeatherIcon.glyphMap;
+    // icon: keyof typeof FeatherIcon.glyphMap;
     valueType: ValueType;
+    valueDescription: string;
     frequency: Frequency;
     reminders: string[];
 }

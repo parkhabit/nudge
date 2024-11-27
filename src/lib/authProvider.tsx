@@ -1,11 +1,16 @@
 import { useContext, createContext, type PropsWithChildren } from "react";
 import { useStorageState } from "./useStorageState";
 import { Client, Account, ID, Models } from "react-native-appwrite";
-import { set } from "react-hook-form";
+import { createAccount } from "./appwrite";
 
 const AuthContext = createContext<{
   signIn: (name: string, email: string) => Promise<void>;
-  signUp: (name: string, email: string, password: string) => Promise<void>;
+  signUp: (
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string
+  ) => Promise<void>;
   signOut: () => void;
   session?: string | null;
   isLoading: boolean;
@@ -29,14 +34,8 @@ export function useSession() {
   return value;
 }
 
-let client: Client;
-let account: Account;
-
-client = new Client()
-  .setProject("673c3e6b002bacb965ed")
-  .setPlatform("com.nudge.app");
-
-account = new Account(client);
+const DATABASE_ID = "6746673600096c14bf65";
+const USER_COLLECTION_ID = "67466776000c943ce540";
 
 export function SessionProvider({ children }: PropsWithChildren) {
   const [[isLoading, session], setSession] = useStorageState("session");
@@ -45,15 +44,49 @@ export function SessionProvider({ children }: PropsWithChildren) {
     <AuthContext.Provider
       value={{
         signIn: async (email: string, password: string) => {
+          const { account } = await createAccount();
           await account.createEmailPasswordSession(email, password);
           await account.get().then((user) => {
             setSession(user.$id);
           });
         },
-        signUp: async (name: string, email: string, password: string) => {
-          await account.create(ID.unique(), email, password, name);
+        signUp: async (
+          firstName: string,
+          lastName: string,
+          email: string,
+          password: string
+        ) => {
+          let newUserAccount;
+          try {
+            const { account, database } = await createAccount();
+
+            newUserAccount = await account.create(
+              ID.unique(),
+              email,
+              password,
+              `${firstName} ${lastName}`
+            );
+            if (!newUserAccount) {
+              throw new Error("Error creating user");
+            }
+
+            await database.createDocument(
+              DATABASE_ID,
+              USER_COLLECTION_ID,
+              ID.unique(),
+              {
+                userId: newUserAccount.$id,
+                firstName,
+                lastName,
+                email,
+              }
+            );
+          } catch (error) {
+            console.log("Error on sign up:", error);
+          }
         },
-        signOut: () => {
+        signOut: async () => {
+          const { account } = await createAccount();
           account.deleteSession("current");
           setSession(null);
         },

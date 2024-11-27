@@ -9,12 +9,25 @@ const signupSchema = yup.object({
   email: yup.string().required("Field required"),
   password: yup.string().required("Field required"),
   firstName: yup.string().required("Field required"),
+  lastName: yup.string().required("Field required"),
 });
+
+interface FormData {
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+}
 
 const SignUpForm = ({
   onSignUp,
 }: {
-  onSignUp: (email: string, password: string, name: string) => Promise<void>;
+  onSignUp: (
+    email: string,
+    password: string,
+    firstName: string,
+    lastName: string
+  ) => Promise<void>;
 }) => {
   const {
     control,
@@ -24,8 +37,8 @@ const SignUpForm = ({
     resolver: yupResolver(signupSchema),
   });
 
-  const onSubmit = (data) => {
-    onSignUp(data.email, data.password, data.firstName)
+  const onSubmit = (data: FormData) => {
+    onSignUp(data.email, data.password, data.firstName, data.lastName)
       .then(() => {
         router.push("./success");
       })
@@ -50,8 +63,14 @@ const SignUpForm = ({
       />
 
       <StyledTextInput
-        label="Name"
+        label="First name"
         name="firstName"
+        control={control}
+        errors={errors.firstName}
+      />
+      <StyledTextInput
+        label="Last name"
+        name="lastName"
         control={control}
         errors={errors.firstName}
       />
